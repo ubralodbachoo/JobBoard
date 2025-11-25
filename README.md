@@ -378,8 +378,7 @@ ADZUNA_API_KEY=<your-api-key>
 **თქვენი სახელი**
 
 - GitHub: [@your-username](https://github.com/your-username)
-- Email: your.email@example.com
-- Portfolio: [your-portfolio.com](https://your-portfolio.com)
+- Email: mirzashvili2007@gmail.com
 
 ---
 
@@ -396,7 +395,7 @@ ADZUNA_API_KEY=<your-api-key>
 
 თუ გაქვთ შეკითხვები ან წინადადებები, დამიკავშირდით:
 
-- 📧 Email: your.email@example.com
+- 📧 Email: mirzashvili2007@gmail.com
 - 💬 GitHub Issues: [Create Issue](https://github.com/your-username/JobBoard/issues)
 
 ---
