@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}404 - გვერდი ვერ მოიძებნა{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 text-center">
+        <div class="error-template">
+            <h1 class="display-1">
+                <i class="bi bi-exclamation-triangle-fill text-warning"></i>
+            </h1>
+            <h1 class="display-3">404</h1>
+            <h2>გვერდი ვერ მოიძებნა</h2>
+            <div class="error-details my-4">
+                <p class="lead">უკაცრავად, მოთხოვნილი გვერდი არ არსებობს.</p>
+                <p class="text-muted">შესაძლოა გვერდი წაშლილია, გადატანილია ან არასწორად შეიყვანეთ მისამართი.</p>
+            </div>
+            <div class="error-actions">
+                <a href="{{ url_for('main.index') }}" class="btn btn-primary btn-lg">
+                    <i class="bi bi-house-fill"></i> მთავარ გვერდზე დაბრუნება
+                </a>
+                {% if not current_user.is_authenticated %}
+                <a href="{{ url_for('auth.register') }}" class="btn btn-success btn-lg">
+                    <i class="bi bi-person-plus"></i> რეგისტრაცია
+                </a>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="mt-5">
+            <img src="https://via.placeholder.com/400x300/f8f9fa/6c757d?text=404+Error" 
+                 alt="404 Error" 
+                 class="img-fluid rounded shadow">
+        </div>
+    </div>
+</div>
+{% endblock %}
+

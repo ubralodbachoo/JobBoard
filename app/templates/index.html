@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+{% block title %}ვაკანსიები{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="container">
+        <div class="hero-content text-center">
+            <h1>
+                <i class="bi bi-briefcase-fill"></i> იპოვე შენი სამომავლო
+            </h1>
+            <p class="lead">{{ jobs.total }} ვაკანსია გელოდება საქართველოში</p>
+            {% if not current_user.is_authenticated %}
+            <div class="mt-4">
+                <a href="{{ url_for('auth.register') }}" class="btn btn-light btn-lg me-2">
+                    <i class="bi bi-person-plus"></i> რეგისტრაცია
+                </a>
+                <a href="{{ url_for('main.explore_jobs') }}" class="btn btn-secondary btn-lg">
+                    <i class="bi bi-globe"></i> რეალური ვაკანსიები
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-md-12 text-center">
+            <h2 class="section-title">ახალი ვაკანსიები</h2>
+            <p class="text-muted">ნახე უახლესი სამუშაო შეთავაზებები</p>
+        </div>
+    </div>
+
+{% if jobs.items %}
+<div class="row g-4">
+    {% for job in jobs.items %}
+    <div class="col-lg-4 col-md-6">
+        <div class="card job-card h-100">
+            <div class="card-body job-card-body">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <span class="badge badge-category">
+                        <i class="bi bi-tag-fill"></i> {{ job.category }}
+                    </span>
+                    <small class="text-muted fw-bold">
+                        <i class="bi bi-clock"></i> {{ job.date_posted.strftime('%d/%m/%Y') }}
+                    </small>
+                </div>
+                
+                <h5 class="card-title mb-3">{{ job.title }}</h5>
+                
+                <h6 class="card-subtitle mb-3">
+                    <i class="bi bi-building text-primary"></i> {{ job.company }}
+                </h6>
+                
+                <p class="card-text mb-3">{{ job.short_description }}</p>
+                
+                <div class="mb-3">
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="bi bi-geo-alt-fill text-danger me-2"></i>
+                        <span class="text-muted">{{ job.location }}</span>
+                    </div>
+                    {% if job.salary %}
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-cash-stack text-success me-2"></i>
+                        <span class="text-success fw-bold">{{ job.salary }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <hr class="my-3">
+                
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="text-muted small">
+                        <i class="bi bi-person-circle"></i> 
+                        <a href="{{ url_for('main.user_jobs', username=job.author.username) }}" 
+                           class="text-decoration-none text-primary fw-semibold">
+                            {{ job.author.username }}
+                        </a>
+                    </div>
+                    <a href="{{ url_for('main.job_detail', id=job.id) }}" class="btn btn-sm btn-primary">
+                        დეტალურად <i class="bi bi-arrow-right-circle"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Pagination -->
+{% if jobs.pages > 1 %}
+<nav aria-label="Page navigation" class="mt-4">
+    <ul class="pagination justify-content-center">
+        {% if jobs.has_prev %}
+        <li class="page-item">
+            <a class="page-link" href="{{ url_for('main.index', page=jobs.prev_num) }}">წინა</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <span class="page-link">წინა</span>
+        </li>
+        {% endif %}
+
+        {% for page_num in jobs.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+            {% if page_num %}
+                {% if jobs.page == page_num %}
+                <li class="page-item active">
+                    <span class="page-link">{{ page_num }}</span>
+                </li>
+                {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ url_for('main.index', page=page_num) }}">{{ page_num }}</a>
+                </li>
+                {% endif %}
+            {% else %}
+                <li class="page-item disabled"><span class="page-link">...</span></li>
+            {% endif %}
+        {% endfor %}
+
+        {% if jobs.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="{{ url_for('main.index', page=jobs.next_num) }}">შემდეგი</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <span class="page-link">შემდეგი</span>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+
+{% else %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card text-center shadow-custom">
+            <div class="card-body p-5">
+                <i class="bi bi-inbox display-1 text-primary mb-3"></i>
+                <h3 class="card-title mb-3">ვაკანსიები ვერ მოიძებნა</h3>
+                <p class="card-text text-muted mb-4">ამჟამად არცერთი ვაკანსია არ არის დამატებული.</p>
+                {% if current_user.is_authenticated %}
+                <a href="{{ url_for('main.add_job') }}" class="btn btn-primary btn-lg">
+                    <i class="bi bi-plus-circle"></i> დაამატე პირველი ვაკანსია
+                </a>
+                {% else %}
+                <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg">
+                    <i class="bi bi-person-plus"></i> დარეგისტრირდი და დაამატე ვაკანსია
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+
+{% block title %}პროფილი{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h2 class="section-title">ჩემი პროფილი</h2>
+            <p class="text-muted">მართე შენი პროფილი და ვაკანსიები</p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-4">
+            <!-- Profile Card -->
+            <div class="card shadow-custom text-center">
+                <div class="card-body p-4">
+                    <div class="position-relative d-inline-block mb-4">
+                        <img src="{{ image_file }}" 
+                             alt="Profile Picture" 
+                             class="rounded-circle" 
+                             width="150" 
+                             height="150" 
+                             style="object-fit: cover;">
+                    </div>
+                    
+                    <h3 class="fw-bold text-gradient mb-2">{{ current_user.username }}</h3>
+                    
+                    <p class="text-muted mb-3">
+                        <i class="bi bi-envelope-fill text-primary"></i> {{ current_user.email }}
+                    </p>
+                    
+                    <div class="stats-card mb-3">
+                        <small class="text-muted d-block mb-1">გვაქვს საიდან</small>
+                        <p class="mb-0">
+                            <i class="bi bi-calendar3"></i> 
+                            <strong>{{ current_user.date_created.strftime('%d/%m/%Y') }}</strong>
+                        </p>
+                    </div>
+                    
+                    <a href="{{ url_for('main.user_jobs', username=current_user.username) }}" 
+                       class="btn btn-primary w-100">
+                        <i class="bi bi-briefcase-fill"></i> ჩემი ვაკანსიები
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Stats Card -->
+            <div class="card shadow-custom mt-4">
+                <div class="card-body p-4">
+                    <h5 class="card-title mb-3">
+                        <i class="bi bi-bar-chart-fill text-primary"></i> სტატისტიკა
+                    </h5>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="text-muted">ვაკანსიები</span>
+                        <span class="badge bg-gradient-primary fs-6">{{ current_user.jobs.count() }}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Danger Zone Card -->
+            <div class="card shadow-custom mt-4 border-danger">
+                <div class="card-body p-4">
+                    <h5 class="card-title mb-3 text-danger">
+                        <i class="bi bi-exclamation-triangle-fill"></i> საშიში ზონა
+                    </h5>
+                    <p class="text-muted small mb-3">
+                        ანგარიშის წაშლის შემთხვევაში თქვენი ყველა ვაკანსია და მონაცემები სამუდამოდ წაიშლება.
+                    </p>
+                    <button type="button" class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#deleteAccountModal">
+                        <i class="bi bi-trash-fill"></i> ანგარიშის წაშლა
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-8">
+            <!-- Edit Profile Card -->
+            <div class="card shadow-custom">
+                <div class="card-body p-4">
+                    <h4 class="card-title mb-4">
+                        <i class="bi bi-pencil-square text-primary"></i> პროფილის რედაქტირება
+                    </h4>
+                
+                <form method="POST" enctype="multipart/form-data">
+                    {{ form.hidden_tag() }}
+                    
+                    <div class="mb-3">
+                        {{ form.username.label(class="form-label") }}
+                        {{ form.username(class="form-control" + (" is-invalid" if form.username.errors else ""), required=true) }}
+                        {% if form.username.errors %}
+                            <div class="invalid-feedback">
+                                {% for error in form.username.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.email.label(class="form-label") }}
+                        {{ form.email(class="form-control" + (" is-invalid" if form.email.errors else ""), type="email", required=true) }}
+                        {% if form.email.errors %}
+                            <div class="invalid-feedback">
+                                {% for error in form.email.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.profile_picture.label(class="form-label") }}
+                        {{ form.profile_picture(class="form-control" + (" is-invalid" if form.profile_picture.errors else ""), accept="image/jpeg,image/jpg,image/png,image/gif") }}
+                        <small class="form-text text-muted">მხოლოდ JPG, JPEG, PNG, GIF ფორმატები</small>
+                        {% if form.profile_picture.errors %}
+                            <div class="invalid-feedback">
+                                {% for error in form.profile_picture.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="d-flex gap-2">
+                        {{ form.submit(class="btn btn-primary") }}
+                        <a href="{{ url_for('main.index') }}" class="btn btn-secondary">გაუქმება</a>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Account Modal -->
+<div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0 bg-danger text-white">
+                <h5 class="modal-title" id="deleteAccountModalLabel">
+                    <i class="bi bi-exclamation-triangle-fill"></i> ანგარიშის წაშლა
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="alert alert-danger" role="alert">
+                    <i class="bi bi-exclamation-circle-fill"></i>
+                    <strong>გაფრთხილება!</strong> ეს მოქმედება შეუქცევადია.
+                </div>
+                
+                <p class="mb-3">ანგარიშის წაშლის შემთხვევაში:</p>
+                <ul class="text-danger mb-4">
+                    <li>წაიშლება თქვენი პროფილი</li>
+                    <li>წაიშლება ყველა თქვენი ვაკანსია ({{ current_user.jobs.count() }})</li>
+                    <li>მონაცემების აღდგენა შეუძლებელი იქნება</li>
+                </ul>
+                
+                <form method="POST" action="{{ url_for('main.delete_account') }}">
+                    {{ delete_form.hidden_tag() }}
+                    
+                    <div class="mb-3">
+                        {{ delete_form.password.label(class="form-label") }}
+                        {{ delete_form.password(class="form-control" + (" is-invalid" if delete_form.password.errors else ""), placeholder="შეიყვანეთ პაროლი", required=true) }}
+                        {% if delete_form.password.errors %}
+                            <div class="invalid-feedback">
+                                {% for error in delete_form.password.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ delete_form.confirm_delete.label(class="form-label") }}
+                        {{ delete_form.confirm_delete(class="form-control" + (" is-invalid" if delete_form.confirm_delete.errors else ""), placeholder="DELETE", required=true) }}
+                        <small class="form-text text-muted">დაადასტურეთ დაწერით <strong>DELETE</strong> (დიდი ასოებით)</small>
+                        {% if delete_form.confirm_delete.errors %}
+                            <div class="invalid-feedback">
+                                {% for error in delete_form.confirm_delete.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="d-flex gap-2 mt-4">
+                        <button type="button" class="btn btn-secondary flex-fill" data-bs-dismiss="modal">გაუქმება</button>
+                        {{ delete_form.submit(class="btn btn-danger flex-fill") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

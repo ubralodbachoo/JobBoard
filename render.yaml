@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: jobboard
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn run:app
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        value: sqlite:///jobboard.db
+      - key: ADZUNA_APP_ID
+        value: 5de5be17
+      - key: ADZUNA_API_KEY
+        value: 0e13ae3817f5dd76f691dfb5728b0499

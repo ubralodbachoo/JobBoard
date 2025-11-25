@@ -1,0 +1,221 @@
+{% extends "base.html" %}
+
+{% block title %}რეალური ვაკანსიები{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="container">
+        <div class="hero-content text-center">
+            <h1>
+                <i class="bi bi-globe2"></i> რეალური ვაკანსიები
+            </h1>
+            <p class="lead">მსოფლიო ბაზარზე არსებული ვაკანსიები</p>
+            <span class="badge bg-light text-primary px-4 py-2 fs-6">
+                <i class="bi bi-patch-check-fill"></i> Powered by Adzuna API
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+<!-- Search Box -->
+<div class="search-box">
+    <h3 class="mb-4"><i class="bi bi-search"></i> ძიება</h3>
+    <form method="GET" action="{{ url_for('main.explore_jobs') }}">
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label class="form-label text-white">პროფესია / საკვანძო სიტყვა</label>
+                <input type="text" 
+                       name="q" 
+                       class="form-control form-control-lg" 
+                       placeholder="მაგ: Python Developer, Designer" 
+                       value="{{ query }}">
+            </div>
+            <div class="col-md-3">
+                <label class="form-label text-white">ქვეყანა</label>
+                <select name="country" class="form-select form-select-lg">
+                    <option value="gb" {% if country == 'gb' %}selected{% endif %}>🇬🇧 დიდი ბრიტანეთი</option>
+                    <option value="us" {% if country == 'us' %}selected{% endif %}>🇺🇸 აშშ</option>
+                    <option value="de" {% if country == 'de' %}selected{% endif %}>🇩🇪 გერმანია</option>
+                    <option value="au" {% if country == 'au' %}selected{% endif %}>🇦🇺 ავსტრალია</option>
+                    <option value="ca" {% if country == 'ca' %}selected{% endif %}>🇨🇦 კანადა</option>
+                    <option value="fr" {% if country == 'fr' %}selected{% endif %}>🇫🇷 საფრანგეთი</option>
+                    <option value="it" {% if country == 'it' %}selected{% endif %}>🇮🇹 იტალია</option>
+                    <option value="nl" {% if country == 'nl' %}selected{% endif %}>🇳🇱 ნიდერლანდები</option>
+                    <option value="pl" {% if country == 'pl' %}selected{% endif %}>🇵🇱 პოლონეთი</option>
+                    <option value="ru" {% if country == 'ru' %}selected{% endif %}>🇷🇺 რუსეთი</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label text-white">ლოკაცია (ოფციონალური)</label>
+                <input type="text" 
+                       name="location" 
+                       class="form-control form-control-lg" 
+                       placeholder="მაგ: London, Berlin" 
+                       value="{{ location }}">
+            </div>
+            <div class="col-md-2">
+                <label class="form-label text-white">&nbsp;</label>
+                <button type="submit" class="btn btn-light btn-lg w-100">
+                    <i class="bi bi-search"></i> ძიება
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% if data %}
+    <!-- Results Info -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="d-flex justify-content-between align-items-center p-4 bg-white rounded-3 shadow-sm">
+                <div>
+                    <h4 class="mb-0">
+                        <i class="bi bi-search"></i> 
+                        <span class="text-gradient">{{ data.total }} ვაკანსია</span> მოიძებნა
+                    </h4>
+                </div>
+                <div class="text-end">
+                    <span class="badge bg-gradient-primary px-3 py-2">გვერდი {{ data.page }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Jobs Grid -->
+    <div class="row g-4">
+        {% for job in data.jobs %}
+        <div class="col-lg-6">
+            <div class="card job-card-external h-100 shadow-custom">
+                <span class="adzuna-badge">
+                    <i class="bi bi-globe"></i> EXTERNAL
+                </span>
+                <div class="card-body p-4">
+                    <h5 class="card-title mb-3">{{ job.title }}</h5>
+                    <h6 class="card-subtitle mb-3">
+                        <i class="bi bi-building-fill text-primary"></i> {{ job.company }}
+                    </h6>
+                    
+                    <div class="mb-3 d-flex flex-wrap gap-2">
+                        <span class="badge badge-category">
+                            <i class="bi bi-tag-fill"></i> {{ job.category }}
+                        </span>
+                        {% if job.contract_type %}
+                        <span class="badge bg-secondary">
+                            <i class="bi bi-briefcase"></i> {{ job.contract_type }}
+                        </span>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="row g-2 mb-3">
+                        <div class="col-12">
+                            <i class="bi bi-geo-alt-fill text-danger me-2"></i>
+                            <span class="text-muted">{{ job.location }}</span>
+                        </div>
+                        
+                        {% if job.salary != 'არ არის მითითებული' %}
+                        <div class="col-12">
+                            <i class="bi bi-cash-stack text-success me-2"></i>
+                            <span class="text-success fw-bold">{{ job.salary }}</span>
+                        </div>
+                        {% endif %}
+                        
+                        {% if job.created %}
+                        <div class="col-12">
+                            <i class="bi bi-calendar3 text-primary me-2"></i>
+                            <span class="text-muted">{{ job.created[:10] }}</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <hr class="my-3">
+                    
+                    <!-- Description Preview -->
+                    <p class="card-text text-muted mb-4">
+                        {{ job.description[:180]|striptags }}{% if job.description|length > 180 %}...{% endif %}
+                    </p>
+                    
+                    <a href="{{ job.redirect_url }}" 
+                       target="_blank" 
+                       class="btn btn-primary w-100">
+                        <i class="bi bi-arrow-up-right-circle"></i> სრულად ნახვა
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if data.total > data.results_per_page %}
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+            {% if data.page > 1 %}
+            <li class="page-item">
+                <a class="page-link" href="{{ url_for('main.explore_jobs', q=query, location=location, country=country, page=data.page-1) }}">
+                    წინა
+                </a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">წინა</span>
+            </li>
+            {% endif %}
+            
+            <li class="page-item active">
+                <span class="page-link">{{ data.page }}</span>
+            </li>
+            
+            {% if (data.page * data.results_per_page) < data.total %}
+            <li class="page-item">
+                <a class="page-link" href="{{ url_for('main.explore_jobs', q=query, location=location, country=country, page=data.page+1) }}">
+                    შემდეგი
+                </a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">შემდეგი</span>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+
+{% else %}
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card text-center shadow-custom">
+                <div class="card-body p-5">
+                    <i class="bi bi-search display-1 text-primary mb-4"></i>
+                    <h3 class="mb-3">ვაკანსიები ვერ მოიძებნა</h3>
+                    <p class="text-muted mb-4">სცადეთ სხვა საძიებო პარამეტრები ან ქვეყანა</p>
+                    <button onclick="document.querySelector('form').scrollIntoView({behavior: 'smooth'})" 
+                            class="btn btn-primary btn-lg">
+                        <i class="bi bi-arrow-up-circle"></i> ახალი ძიება
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+<!-- Info Footer -->
+<div class="row mt-5">
+    <div class="col-md-12">
+        <div class="card bg-gradient-primary text-white">
+            <div class="card-body text-center p-4">
+                <i class="bi bi-info-circle-fill display-6 mb-3"></i>
+                <h5 class="mb-2">Adzuna API Integration</h5>
+                <p class="mb-0 opacity-75">
+                    ეს ვაკანსიები მოწოდებულია Adzuna API-დან და წარმოადგენს რეალურ ვაკანსიებს მსოფლიო ბაზრიდან.
+                    ძიება შესაძლებელია 10+ ქვეყანაში.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}
