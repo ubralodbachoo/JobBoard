@@ -2,8 +2,8 @@ services:
   - type: web
     name: jobboard
     env: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn run:app
+    buildCommand: ./build.sh
+    startCommand: gunicorn --bind 0.0.0.0:$PORT run:app
     envVars:
       - key: SECRET_KEY
         generateValue: true
