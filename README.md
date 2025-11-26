@@ -375,9 +375,9 @@ ADZUNA_API_KEY=<your-api-key>
 
 ## 👨‍💻 ავტორი
 
-**თქვენი სახელი**
+ბაჩო მირზაშვილი
 
-- GitHub: [@your-username](https://github.com/your-username)
+- GitHub: [@your-username](https://github.com/ubralodbachoo)
 - Email: mirzashvili2007@gmail.com
 
 ---

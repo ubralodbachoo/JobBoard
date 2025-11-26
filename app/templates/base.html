@@ -96,12 +96,119 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white text-center py-4 mt-5">
-        <div class="container">
-            <p class="mb-0">&copy; 2025 JobBoard. ყველა უფლება დაცულია.</p>
-            <p class="mb-0">
-                <small>შექმნილია Flask-ით <i class="bi bi-heart-fill text-danger"></i></small>
-            </p>
+    <footer class="footer bg-dark text-white mt-5">
+        <div class="container py-5">
+            <div class="row g-4">
+                <!-- About Section -->
+                <div class="col-lg-4 col-md-6">
+                    <h5 class="fw-bold mb-3">
+                        <i class="bi bi-briefcase-fill text-primary"></i> JobBoard
+                    </h5>
+                    <p class="text-white-50 mb-3">
+                        თანამედროვე პლატფორმა, რომელიც აერთიანებს დამსაქმებლებს და ტალანტურ სპეციალისტებს საქართველოში.
+                    </p>
+                    <div class="d-flex gap-2">
+                        <a href="https://www.facebook.com/bacho.mirzashvili.956807" class="btn btn-outline-light btn-sm rounded-circle" style="width: 40px; height: 40px; padding: 0; display: flex; align-items: center; justify-content: center;">
+                            <i class="bi bi-facebook"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/bacho-mirzashvili-57a574260/" class="btn btn-outline-light btn-sm rounded-circle" style="width: 40px; height: 40px; padding: 0; display: flex; align-items: center; justify-content: center;">
+                            <i class="bi bi-linkedin"></i>
+                        </a>
+                        <a href="https://www.instagram.com/ubralodbacho/" class="btn btn-outline-light btn-sm rounded-circle" style="width: 40px; height: 40px; padding: 0; display: flex; align-items: center; justify-content: center;">
+                            <i class="bi bi-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div class="col-lg-2 col-md-6">
+                    <h6 class="fw-bold mb-3">სწრაფი ლინკები</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <a href="{{ url_for('main.index') }}" class="text-white-50 text-decoration-none hover-link">
+                                <i class="bi bi-chevron-right"></i> მთავარი
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{{ url_for('main.explore_jobs') }}" class="text-white-50 text-decoration-none hover-link">
+                                <i class="bi bi-chevron-right"></i> რეალური ვაკანსიები
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{{ url_for('main.about') }}" class="text-white-50 text-decoration-none hover-link">
+                                <i class="bi bi-chevron-right"></i> ჩვენ შესახებ
+                            </a>
+                        </li>
+                        {% if current_user.is_authenticated %}
+                        <li class="mb-2">
+                            <a href="{{ url_for('main.add_job') }}" class="text-white-50 text-decoration-none hover-link">
+                                <i class="bi bi-chevron-right"></i> ვაკანსიის დამატება
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                
+                <!-- Categories -->
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="fw-bold mb-3">კატეგორიები</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <a href="{{ url_for('main.index') }}" class="text-white-50 text-decoration-none hover-link">
+                                <i class="bi bi-tag"></i> IT & Technology
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{{ url_for('main.index') }}" class="text-white-50 text-decoration-none hover-link">
+                                <i class="bi bi-tag"></i> Design
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{{ url_for('main.index') }}" class="text-white-50 text-decoration-none hover-link">
+                                <i class="bi bi-tag"></i> Marketing
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="{{ url_for('main.index') }}" class="text-white-50 text-decoration-none hover-link">
+                                <i class="bi bi-tag"></i> Finance
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="fw-bold mb-3">კონტაქტი</h6>
+                    <ul class="list-unstyled text-white-50">
+                        <li class="mb-2">
+                            <i class="bi bi-geo-alt-fill text-primary"></i> თბილისი, საქართველო
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-envelope-fill text-primary"></i> info@jobboard.ge
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-phone-fill text-primary"></i> +995 555 123 456
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <hr class="my-4 bg-secondary">
+            
+            <!-- Bottom Footer -->
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    <p class="mb-0 text-white-50">
+                        &copy; 2025 JobBoard. ყველა უფლება დაცულია.
+                    </p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="mb-0 text-white-50">
+                        შექმნილია Flask-ით <i class="bi bi-heart-fill text-danger"></i> | 
+                        Powered by <span class="text-primary">Adzuna API</span>
+                    </p>
+                </div>
+            </div>
         </div>
     </footer>
 

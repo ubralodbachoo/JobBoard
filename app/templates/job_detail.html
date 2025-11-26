@@ -164,13 +164,13 @@
             </div>
             
             <!-- Contact Card -->
-            <div class="card bg-gradient-primary text-white shadow-custom">
+            <div class="card shadow-custom border">
                 <div class="card-body p-4 text-center">
-                    <i class="bi bi-envelope-fill display-4 mb-3"></i>
-                    <h5 class="card-title">დაინტერესებული ხარ?</h5>
-                    <p class="card-text mb-3">დაუკავშირდი ავტორს დამატებითი ინფორმაციისთვის</p>
+                    <i class="bi bi-envelope-fill text-primary display-4 mb-3"></i>
+                    <h5 class="card-title fw-bold">დაინტერესებული ხარ?</h5>
+                    <p class="card-text mb-3 text-muted">დაუკავშირდი ავტორს დამატებითი ინფორმაციისთვის</p>
                     <a href="{{ url_for('main.user_jobs', username=job.author.username) }}" 
-                       class="btn btn-light btn-lg w-100">
+                       class="btn btn-primary btn-lg w-100">
                         <i class="bi bi-person-lines-fill"></i> ნახე პროფილი
                     </a>
                 </div>

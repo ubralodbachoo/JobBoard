@@ -38,7 +38,17 @@ def index():
 
 @bp.route('/about')
 def about():
-    return render_template('about.html', title='ჩვენ შესახებ')
+    """About page with real statistics from database"""
+    # რეალური სტატისტიკა ბაზიდან
+    total_jobs = Job.query.count()
+    total_users = User.query.count()
+    
+    stats = {
+        'total_jobs': total_jobs,
+        'total_users': total_users
+    }
+    
+    return render_template('about.html', title='ჩვენ შესახებ', stats=stats)
 
 
 @bp.route('/explore-jobs')

@@ -585,3 +585,60 @@ footer a:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.3);
 }
+
+/* ================ Footer ================ */
+.footer {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.footer h5, .footer h6 {
+    color: white;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.footer h5::after, .footer h6::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 40px;
+    height: 3px;
+    background: var(--primary-color);
+    border-radius: 2px;
+}
+
+.footer .hover-link {
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.footer .hover-link:hover {
+    color: white !important;
+    transform: translateX(5px);
+}
+
+.footer .btn-outline-light {
+    border-color: rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.footer .btn-outline-light:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.4);
+}
+
+.footer hr {
+    opacity: 0.2;
+}
+
+.footer ul li {
+    transition: all 0.2s ease;
+}
+
+.footer ul li:hover {
+    transform: translateX(3px);
+}
