@@ -4,16 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %} - JobBoard</title>
-    
-    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
             <a class="navbar-brand" href="{{ url_for('main.index') }}">
@@ -76,7 +71,6 @@
         </div>
     </nav>
 
-    <!-- Flash Messages -->
     <div class="container mt-3">
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
@@ -90,21 +84,17 @@
         {% endwith %}
     </div>
 
-    <!-- Main Content -->
     <main class="container my-4">
         {% block content %}{% endblock %}
     </main>
 
-    <!-- Footer -->
     <footer class="mt-5">
         <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
-            <span>&copy; 2025 JobBoard</span>
-            <span>შექმნილია Flask-ით · Powered by Adzuna API</span>
+            <span>&copy; 2026 JobBoard</span>
+            <span>Flask · Adzuna API</span>
         </div>
     </footer>
 
-    <!-- Bootstrap 5 JS Bundle (Required for modals, alerts, dropdowns) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-

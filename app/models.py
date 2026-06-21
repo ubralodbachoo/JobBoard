@@ -14,7 +14,6 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), unique=True, nullable=False, index=True)
     email = db.Column(db.String(120), unique=True, nullable=False, index=True)
     password_hash = db.Column(db.String(256), nullable=False)
-    profile_image = db.Column(db.String(200), nullable=True, default='default.jpg')
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
     jobs = db.relationship('Job', backref='author', lazy='dynamic', cascade='all, delete-orphan')
 

@@ -4,7 +4,6 @@
 
 {% block content %}
 <div class="container">
-    <!-- Back Button -->
     <div class="mb-4">
         <a href="{{ url_for('main.index') }}" class="btn btn-secondary">
             <i class="bi bi-arrow-left"></i> უკან
@@ -13,10 +12,8 @@
 
     <div class="row g-4">
         <div class="col-lg-8">
-            <!-- Main Job Card -->
             <div class="card shadow-custom mb-4">
                 <div class="card-body p-4">
-                    <!-- Header -->
                     <div class="d-flex justify-content-between align-items-start mb-4">
                         <span class="badge badge-category px-3 py-2">
                             <i class="bi bi-tag-fill"></i> {{ job.category }}
@@ -29,15 +26,12 @@
                         </div>
                     </div>
                     
-                    <!-- Job Title -->
                     <h1 class="display-5 fw-bold text-gradient mb-3">{{ job.title }}</h1>
                     
-                    <!-- Company -->
                     <h3 class="h4 mb-4 text-muted">
                         <i class="bi bi-building-fill text-primary"></i> {{ job.company }}
                     </h3>
                     
-                    <!-- Key Info -->
                     <div class="row g-3 mb-4">
                         <div class="col-md-6">
                             <div class="info-box">
@@ -59,7 +53,6 @@
                     
                     <hr class="my-4">
                     
-                    <!-- Short Description -->
                     <div class="mb-4">
                         <h4 class="h5 mb-3">
                             <i class="bi bi-file-text text-primary"></i> მოკლე აღწერა
@@ -67,7 +60,6 @@
                         <p class="lead text-muted">{{ job.short_description }}</p>
                     </div>
                     
-                    <!-- Full Description -->
                     <div class="mb-4">
                         <h4 class="h5 mb-3">
                             <i class="bi bi-list-ul text-primary"></i> სრული ინფორმაცია
@@ -79,7 +71,6 @@
                     
                     <hr class="my-4">
                     
-                    <!-- Author & Actions -->
                     <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
                         <div>
                             <small class="text-muted d-block mb-1">გამოაქვეყნა</small>
@@ -104,9 +95,7 @@
             </div>
         </div>
         
-        <!-- Sidebar -->
         <div class="col-lg-4">
-            <!-- Quick Info Card -->
             <div class="card shadow-custom mb-4">
                 <div class="card-body p-4">
                     <h5 class="card-title mb-4">
@@ -163,7 +152,6 @@
                 </div>
             </div>
             
-            <!-- Contact Card -->
             <div class="card shadow-custom border">
                 <div class="card-body p-4 text-center">
                     <i class="bi bi-envelope-fill text-primary display-4 mb-3"></i>
@@ -179,7 +167,6 @@
     </div>
 </div>
 
-<!-- Delete Confirmation Modal -->
 {% if current_user.is_authenticated and current_user == job.author %}
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">

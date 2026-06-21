@@ -16,11 +16,5 @@ class Config:
         )
     SQLALCHEMY_DATABASE_URI = _database_url
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    UPLOAD_FOLDER = os.path.join(basedir, 'app', 'static', 'uploads')
-    MAX_CONTENT_LENGTH = 16 * 1024 * 1024
-    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-    
-    # Adzuna Jobs API - Read from environment variables
     ADZUNA_APP_ID = os.environ.get('ADZUNA_APP_ID')
     ADZUNA_API_KEY = os.environ.get('ADZUNA_API_KEY')
-
