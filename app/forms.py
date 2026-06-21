@@ -1,5 +1,4 @@
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, SelectField
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError, Length
 from app.models import User
@@ -90,9 +89,6 @@ class ProfileUpdateForm(FlaskForm):
     email = StringField('ელფოსტა', validators=[
         DataRequired(message='ელფოსტა აუცილებელია'),
         Email(message='არასწორი ელფოსტის ფორმატი')
-    ])
-    profile_picture = FileField('პროფილის სურათი', validators=[
-        FileAllowed(['jpg', 'jpeg', 'png', 'gif'], 'მხოლოდ სურათები დაშვებულია!')
     ])
     submit = SubmitField('განახლება')
 

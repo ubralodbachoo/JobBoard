@@ -3,12 +3,6 @@ from flask import current_app
 
 
 def search_adzuna_jobs(query='', location='', results_per_page=20, page=1, country='gb'):
-    """
-    Search for jobs using Adzuna API.
-    Returns a list of job postings from Adzuna.
-    
-    Supported countries: gb, us, de, au, ca, fr, it, nl, pl, ru, etc.
-    """
     app_id = current_app.config.get('ADZUNA_APP_ID')
     api_key = current_app.config.get('ADZUNA_API_KEY')
     
