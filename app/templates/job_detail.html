@@ -64,9 +64,7 @@
                         <h4 class="h5 mb-3">
                             <i class="bi bi-list-ul text-primary"></i> სრული ინფორმაცია
                         </h4>
-                        <div class="job-description bg-light p-4 rounded">
-                            {{ job.full_description|replace('\n', '<br>')|safe }}
-                        </div>
+                        <p class="text-muted job-description mb-0">{{ job.full_description }}</p>
                     </div>
                     
                     <hr class="my-4">

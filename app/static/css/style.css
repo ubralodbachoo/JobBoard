@@ -202,9 +202,7 @@ a {
 
 .job-description {
     line-height: 1.7;
-    color: #475569;
-    white-space: pre-wrap;
-    word-wrap: break-word;
+    white-space: pre-line;
 }
 
 .rounded-circle {
